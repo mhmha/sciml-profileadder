@@ -85,7 +85,7 @@ with st.form("form"):
 		if len(name) <= 1:
 		       st.error('Invalid name')
 		       good = False
-		if check_website_url(website) != 200:
+		if check_website_url(website) == 404:
 			st.error('Could not find website from given URL')
 			good = False
 		if check_github_user(github) != 200:
