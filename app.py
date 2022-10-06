@@ -70,7 +70,7 @@ with st.form("form"):
 	
 	applications = []
 	for i in range(3):
-		a = st.text_input('', key=str(i), help='e.g. crop type classification')
+		a = st.text_input('', key=str(i)+'_', help='e.g. crop type classification')
 		applications.append(a)
 	
 	st.write('---')
