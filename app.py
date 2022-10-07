@@ -3,8 +3,8 @@ import requests
 import os
 access_token = st.secrets['access_token']
 
-os.system('git config --global user.email "spiruel@gmail.com"')
-os.system('git config --global user.name "Samuel Bancroft"')
+#os.system('git config --global user.email "spiruel@gmail.com"')
+#os.system('git config --global user.name "Samuel Bancroft"')
 
 good = False
 
