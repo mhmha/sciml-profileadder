@@ -124,8 +124,8 @@ with st.form("form"):
 			name_trunc = name.replace(' ', '').lower()
 			cwd = os.getcwd()
 			
-			os.system('git config --global user.email "spiruel@gmail.com"
-			os.system(git config --global user.name "Samuel Bancroft"'
+			os.system("git config --global user.email 'spiruel@gmail.com'")
+			os.system("git config --global user.name 'Samuel Bancroft'")
 				  
 			os.system('rm -rf --interactive=never sciml-leeds.github.io')
 			os.system('git clone https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git')
