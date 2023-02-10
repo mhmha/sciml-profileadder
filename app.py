@@ -54,7 +54,7 @@ with st.form("form"):
 	
 	st.caption('Socials')
 	
-	website = st.text_input('Website URL (include https)')
+	website = st.text_input('Website URL (include https and ensure the website is valid)')
 	github = st.text_input('Github username')
 	twitter = st.text_input('Twitter username')
 
@@ -112,13 +112,13 @@ with st.form("form"):
     github: {github}
     twitter: {twitter}
   techniques:
-    {techniques_list[0]}
-    {techniques_list[1]}
-    {techniques_list[2]}
+    {'- ' + techniques[0]}
+    {'- ' + techniques[1]}
+    {'- ' + techniques[2]}
   applications:
-    {applications_list[0]}
-    {applications_list[1]}
-    {applications_list[2]}"""
+    {'- ' + applications[0]}
+    {'- ' + applications[1]}
+    {'- ' + applications[2]}"""
 			
 			st.text(new_text)
 
