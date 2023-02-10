@@ -106,6 +106,7 @@ with st.form("form"):
 		
 		if good:
 			new_text = f"""
+			
 - name: {name.title()}		
   social:
     website: {website}
