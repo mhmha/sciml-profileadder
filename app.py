@@ -112,10 +112,14 @@ with st.form("form"):
     github: {github}
     twitter: {twitter}
   techniques:
-    {techniques_list}
+    {techniques_list[0]}
+    {techniques_list[1]}
+    {techniques_list[2]}
   applications:
-    {applications_list}
-				    """
+    {applications_list[0]}
+    {applications_list[1]}
+    {applications_list[2]}"""
+			
 			st.text(new_text)
 
 			if image:
