@@ -3,13 +3,13 @@ import requests
 import os
 access_token = st.secrets['access_token']
 
-hide_submit_text = ‘’’
+hide_submit_text = '''
 
 div[data-testid="InputInstructions"] > span:nth-child(1) {
     visibility: hidden;
 }
 
-‘’’
+'''
 st.markdown(hide_submit_text, unsafe_allow_html=True)
 
 #os.system('git config --global user.email "spiruel@gmail.com"')
