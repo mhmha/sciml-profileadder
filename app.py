@@ -3,6 +3,15 @@ import requests
 import os
 access_token = st.secrets['access_token']
 
+hide_submit_text = ‘’’
+
+div[data-testid="InputInstructions"] > span:nth-child(1) {
+    visibility: hidden;
+}
+
+‘’’
+st.markdown(hide_submit_text, unsafe_allow_html=True)
+
 #os.system('git config --global user.email "spiruel@gmail.com"')
 #os.system('git config --global user.name "Samuel Bancroft"')
 
@@ -88,11 +97,11 @@ with st.form("form"):
 		if len(name) <= 1:
 		       st.error('Invalid name')
 		       good = False
-		if check_website_url(website) == 404:
-			st.error('Could not find website from given URL')
+		if check_website_url(website) == 404 and website != '':
+			st.error('Could not find website from given website URL')
 			good = False
-		if check_github_user(github) != 200:
-			st.error(f'Github username {github} does not exist')
+		if check_github_user(github) != 200 and github != '':
+			st.error(f'Github profile {github} could not be found')
 			good = False
 		#if check_twitter_user(twitter) is not 200:
 		#	st.error(f'Twitter username {twitter} does not exist')
