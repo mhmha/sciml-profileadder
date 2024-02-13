@@ -126,35 +126,34 @@ with st.form("form"):
 			if image:
 				st.image(image)
 
-			if st.button('Click here to submit profile for approval:'):
-				name_trunc = name.replace(' ', '').lower()
-				cwd = os.getcwd()
+			name_trunc = name.replace(' ', '').lower()
+			cwd = os.getcwd()
+			
+			os.system("git config --global user.email 'spiruel@gmail.com'")
+			os.system("git config --global user.name 'Samuel Bancroft'")
+				  
+			os.system('rm -rf --interactive=never sciml-leeds.github.io')
+			os.system('git clone https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git')
+			os.chdir('sciml-leeds.github.io')
+			os.system('git fetch')
+			os.system(f"git checkout -b {name_trunc}")
+			
+			with open('_data/people.yaml', 'a') as f:
+				f.write(new_text)
 				
-				os.system("git config --global user.email 'spiruel@gmail.com'")
-				os.system("git config --global user.name 'Samuel Bancroft'")
-					  
-				os.system('rm -rf --interactive=never sciml-leeds.github.io')
-				os.system('git clone https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git')
-				os.chdir('sciml-leeds.github.io')
-				os.system('git fetch')
-				os.system(f"git checkout -b {name_trunc}")
+			os.system("git add '_data/people.yaml'")
+
+			if image is not None:
+				with open(f"assets/img/{name_trunc}.png","wb") as f: 
+					f.write(image.getbuffer())
+				st.info('Added image')
+				os.system(f"git add 'assets/img/{name_trunc}.png'")
 				
-				with open('_data/people.yaml', 'a') as f:
-					f.write(new_text)
+			os.system("git commit -m'initial commit'")
+			os.system(f"git remote set-url origin https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git")
+			os.system(f'git push --set-upstream origin {name_trunc}')
+			#os.system(f"git push")
+			os.chdir(cwd)
 					
-				os.system("git add '_data/people.yaml'")
-	
-				if image is not None:
-					with open(f"assets/img/{name_trunc}.png","wb") as f: 
-	      					f.write(image.getbuffer())
-					st.info('Added image')
-					os.system(f"git add 'assets/img/{name_trunc}.png'")
-					
-				os.system("git commit -m'initial commit'")
-				os.system(f"git remote set-url origin https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git")
-				os.system(f'git push --set-upstream origin {name_trunc}')
-				#os.system(f"git push")
-				os.chdir(cwd)
-						
-				st.success('Submitted branch to gh')
+			st.success('Submitted branch to gh')
 
