@@ -80,32 +80,28 @@ with st.form("form"):
 	
 	image = st.file_uploader('Profile picture', type=['png', 'jpg', 'jpeg'])
 	
-	submitted = st.form_submit_button("Does everything look correct? Now click here")
-	
-	if submitted:
-	
-		good = True
-		if len(name) <= 1:
-		       st.error('Invalid name')
-		       good = False
-		if check_website_url(website) == 404 and website != '':
-			st.error('Could not find website from given website URL')
-			good = False
-		if check_github_user(github) != 200 and github != '':
-			st.error(f'Github profile {github} could not be found')
-			good = False
-		#if check_twitter_user(twitter) is not 200:
-		#	st.error(f'Twitter username {twitter} does not exist')
-		#	good = False
-			
-		techniques = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(techniques)]
-		applications = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(applications)]
+	good = True
+	if len(name) <= 1:
+	       st.error('Invalid name')
+	       good = False
+	if check_website_url(website) == 404 and website != '':
+		st.error('Could not find website from given website URL')
+		good = False
+	if check_github_user(github) != 200 and github != '':
+		st.error(f'Github profile {github} could not be found')
+		good = False
+	#if check_twitter_user(twitter) is not 200:
+	#	st.error(f'Twitter username {twitter} does not exist')
+	#	good = False
 		
-		techniques_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(techniques)])
-		applications_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(applications)])
-		
-		if good:
-			new_text = f"""
+	techniques = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(techniques)]
+	applications = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(applications)]
+	
+	techniques_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(techniques)])
+	applications_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(applications)])
+	
+	if good:
+		new_text = f"""
 			
 - name: {name.title()}		
   social:
@@ -122,38 +118,42 @@ with st.form("form"):
     {'- ' + applications[2]}"""
 			
 			st.text(new_text)
-			
-			if image:
-				st.image(image)
 
-			name_trunc = name.replace(' ', '').lower()
-			cwd = os.getcwd()
+			submitted = st.form_submit_button("Does everything look correct? Now click here")
+	
+			if submitted:
 			
-			os.system("git config --global user.email 'spiruel@gmail.com'")
-			os.system("git config --global user.name 'Samuel Bancroft'")
-				  
-			os.system('rm -rf --interactive=never sciml-leeds.github.io')
-			os.system('git clone https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git')
-			os.chdir('sciml-leeds.github.io')
-			os.system('git fetch')
-			os.system(f"git checkout -b {name_trunc}")
-			
-			with open('_data/people.yaml', 'a') as f:
-				f.write(new_text)
+				if image:
+					st.image(image)
+	
+				name_trunc = name.replace(' ', '').lower()
+				cwd = os.getcwd()
 				
-			os.system("git add '_data/people.yaml'")
-
-			if image is not None:
-				with open(f"assets/img/{name_trunc}.png","wb") as f: 
-					f.write(image.getbuffer())
-				st.info('Added image')
-				os.system(f"git add 'assets/img/{name_trunc}.png'")
+				os.system("git config --global user.email 'spiruel@gmail.com'")
+				os.system("git config --global user.name 'Samuel Bancroft'")
+					  
+				os.system('rm -rf --interactive=never sciml-leeds.github.io')
+				os.system('git clone https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git')
+				os.chdir('sciml-leeds.github.io')
+				os.system('git fetch')
+				os.system(f"git checkout -b {name_trunc}")
 				
-			os.system("git commit -m'initial commit'")
-			os.system(f"git remote set-url origin https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git")
-			os.system(f'git push --set-upstream origin {name_trunc}')
-			#os.system(f"git push")
-			os.chdir(cwd)
+				with open('_data/people.yaml', 'a') as f:
+					f.write(new_text)
 					
-			st.success('Submitted branch to gh')
+				os.system("git add '_data/people.yaml'")
+	
+				if image is not None:
+					with open(f"assets/img/{name_trunc}.png","wb") as f: 
+						f.write(image.getbuffer())
+					st.info('Added image')
+					os.system(f"git add 'assets/img/{name_trunc}.png'")
+					
+				os.system("git commit -m'initial commit'")
+				os.system(f"git remote set-url origin https://{access_token}@github.com/sciml-leeds/sciml-leeds.github.io.git")
+				os.system(f'git push --set-upstream origin {name_trunc}')
+				#os.system(f"git push")
+				os.chdir(cwd)
+						
+				st.success('Submitted branch to gh')
 
