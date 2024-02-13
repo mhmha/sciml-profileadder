@@ -80,28 +80,32 @@ with st.form("form"):
 	
 	image = st.file_uploader('Profile picture', type=['png', 'jpg', 'jpeg'])
 	
-	good = True
-	if len(name) <= 1:
-	       st.error('Invalid name')
-	       good = False
-	if check_website_url(website) == 404 and website != '':
-		st.error('Could not find website from given website URL')
-		good = False
-	if check_github_user(github) != 200 and github != '':
-		st.error(f'Github profile {github} could not be found')
-		good = False
-	#if check_twitter_user(twitter) is not 200:
-	#	st.error(f'Twitter username {twitter} does not exist')
-	#	good = False
+	submitted = st.form_submit_button("Does everything look correct? Now click here")
+	
+	if submitted:
+	
+		good = True
+		if len(name) <= 1:
+		       st.error('Invalid name')
+		       good = False
+		if check_website_url(website) == 404 and website != '':
+			st.error('Could not find website from given website URL')
+			good = False
+		if check_github_user(github) != 200 and github != '':
+			st.error(f'Github profile {github} could not be found')
+			good = False
+		#if check_twitter_user(twitter) is not 200:
+		#	st.error(f'Twitter username {twitter} does not exist')
+		#	good = False
+			
+		techniques = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(techniques)]
+		applications = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(applications)]
 		
-	techniques = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(techniques)]
-	applications = [j.capitalize() if i == 0 else j.lower() for i,j in enumerate(applications)]
-	
-	techniques_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(techniques)])
-	applications_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(applications)])
-	
-	if good:
-		new_text = f"""
+		techniques_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(techniques)])
+		applications_list = '\n'.join(['    '*j + '- ' + i for j,i in enumerate(applications)])
+		
+		if good:
+			new_text = f"""
 			
 - name: {name.title()}		
   social:
@@ -117,12 +121,8 @@ with st.form("form"):
     {'- ' + applications[1]}
     {'- ' + applications[2]}"""
 			
-		st.text(new_text)
-
-		submitted = st.form_submit_button("Does everything look correct? Now click here")
-
-		if submitted:
-		
+			st.text(new_text)
+			
 			if image:
 				st.image(image)
 
@@ -156,4 +156,3 @@ with st.form("form"):
 			os.chdir(cwd)
 					
 			st.success('Submitted branch to gh')
-
